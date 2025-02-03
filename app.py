@@ -43,8 +43,11 @@ def get_fun_fact(n):
     
     return "No fun fact available."
         
-@app.route('/api/classify-number', methods=['GET'])
+@app.route('/api/classify-number', methods=['GET', 'OPTIONS'])
 def classify_number():
+    if request.method == 'OPTIONS':
+        return '', 200
+    
     number = request.args.get('number', type=int)
     if number is None:
         return jsonify({
@@ -79,5 +82,5 @@ def test():
             
             
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
+    app.run(host='0.0.0.0', port=10000, debug=True)
                
