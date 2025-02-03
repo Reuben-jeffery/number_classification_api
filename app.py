@@ -82,8 +82,8 @@ def classify_number():
         "is_prime": is_prime,
         "is_perfect": is_perfect,
         "properties": properties,
-        "digit_sum": digit_sum,
-        "fun_fact": fun_fact,
+        "digit_sum": digit_sum_with_comment,
+        "fun_fact": fun_fact_with_comments,
     })
     
 @app.route('/test')
