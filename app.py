@@ -1,0 +1,79 @@
+from flask import Flask, request, jsonify
+import requests
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+def is_prime_number(n):
+    """Check if a number is prime."""
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+        return True
+    
+def is_perfect_number(n):
+    """Check if a number is perfect."""
+    if n < 2:
+        return False
+    sum_factors = sum(i for i in range(1, n) if n % i == 0)
+    return sum_factors == n    
+
+def sum_of_digits(n):
+    """Calculate the sum of the digits of a number."""
+    return sum(int(digit) for digit in str(abs(n)))
+
+def is_armstrong(n):
+    """Check if a number is an Armstrong number."""
+    digits = [int(d) for d in str(n)]
+    num_digits = len(digits)
+    return n == sum(d ** num_digits for d in digits)
+
+def get_fun_fact(n):
+    """Fetch a fun fact about the number from the Number APi."""
+    response = requests.get(f"http://numbersapi.com/{n}/math")
+    if response.status_code == 200:
+        return response.text.strip() # Remove extra whitespace
+    
+    return "No fun fact available."
+        
+@app.route('/api/classify-number', methods=['GET'])
+def classify_number():
+    number = request.args.get('number', type=int)
+    if number is None:
+        return jsonify({
+            "number": "alphabet",
+            "error": True
+        }), 400
+    
+    is_prime = is_prime_number(number)
+    is_perfect = is_perfect_number(number)
+    digit_sum = sum_of_digits(number)
+    fun_fact = get_fun_fact(number)
+    
+    properties = []
+    if is_armstrong(number):
+        properties.append("armstrong")
+    if number % 2 == 0:
+        properties.append("even")
+    else:
+        properties.append("odd")
+    
+    return jsonify({
+        "number": is_prime,
+        "is_prime": is_perfect,
+        "properties": properties,
+        "digit_sum": digit_sum,
+        "fun_fact": fun_fact,
+    })
+    
+@app.route('/test')
+def test():
+    return "Hello, Flask is working!"
+            
+            
+if __name__ == '__main__':
+    app.run(debug=True)
+               
