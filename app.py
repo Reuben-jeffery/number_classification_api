@@ -73,9 +73,14 @@ def classify_number():
         num_digits = len(digits)
         armstrong_explanation = " + ".join(f"{d}^{num_digits}" for d in digits)
         fun_fact = f"{number} is an Armstrong number because {armstrong_explanation} = {number}"    
+    
+    fun_fact_with_comments = f"{fun_fact} //gotten from the numbers API"
+    digit_sum_with_comment = f"{digit_sum} // sum of its digits"
+    
     return jsonify({
-        "number": is_prime,
-        "is_prime": is_perfect,
+        "number": number,
+        "is_prime": is_prime,
+        "is_perfect": is_perfect,
         "properties": properties,
         "digit_sum": digit_sum,
         "fun_fact": fun_fact,
