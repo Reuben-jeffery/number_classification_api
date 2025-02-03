@@ -68,6 +68,11 @@ def classify_number():
     else:
         properties.append("odd")
     
+    if "armstrong" in properties:
+        digits = [int(d) for d in str(number)]
+        num_digits = len(digits)
+        armstrong_explanation = " + ".join(f"{d}^{num_digits}" for d in digits)
+        fun_fact = f"{number} is an Armstrong number because {armstrong_explanation} = {number}"    
     return jsonify({
         "number": is_prime,
         "is_prime": is_perfect,
