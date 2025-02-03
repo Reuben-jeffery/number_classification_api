@@ -5,7 +5,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-@app.rout('/')
+@app.route('/')
 def home():
     return "Welcome to the Number Classification API Visit /api/classify-number?number=<your_number> to use the API."
 
