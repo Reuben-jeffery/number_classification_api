@@ -54,6 +54,18 @@ def classify_number():
             "number": "alphabet",
             "error": True
         }), 400
+        
+        try:
+            number = int(number_str)
+        except ValueError: 
+            return jsonify({
+                "number": number_str,
+                "is_prime": False,
+                "is_perfect": False,
+                "properties": ["non_integer"],
+                "digit_sum": 0,
+                "fun_fact": f"{number_str} is not a valid integer."
+            })   
     
     is_prime = is_prime_number(number)
     is_perfect = is_perfect_number(number)
