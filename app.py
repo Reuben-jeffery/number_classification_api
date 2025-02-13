@@ -44,17 +44,19 @@ def get_fun_fact(n):
     return "No fun fact available."
         
 @app.route('/api/classify-number', methods=['GET', 'OPTIONS'])
+@cross_origin()
 def classify_number():
     if request.method == 'OPTIONS':
         return '', 200
     
-    number = request.args.get('number', type=int)
-    if number is None:
+    number_str = request.args.get('number')
+    if number_str is None or not number_str.Istrip('-').isdigit():
         return jsonify({
             "number": "alphabet",
             "error": True
         }), 400
         
+    number = int(number_str)    
     original_number = number
         
     number = abs(number)   
