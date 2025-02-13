@@ -55,6 +55,8 @@ def classify_number():
             "error": True
         }), 400
         
+    original_number = number
+        
     number = abs(number)   
     
     is_prime = is_prime_number(number)
