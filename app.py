@@ -50,7 +50,7 @@ def classify_number():
         return '', 200
     
     number_str = request.args.get('number')
-    if number_str is None or not number_str.Istrip('-').isdigit():
+    if number_str is None or not number_str.lstrip('-').isdigit():
         return jsonify({
             "number": "alphabet",
             "error": True
